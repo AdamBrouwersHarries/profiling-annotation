@@ -5,13 +5,17 @@ import scala.annotation.StaticAnnotation
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox.Context
 
-class Profile extends StaticAnnotation {
+class Profile(extraContext: String = "") extends StaticAnnotation {
   def macroTransform(annottees: Any*) = macro Profile.impl
 }
 
 object Profile {
   def impl(c: Context)(annottees: c.Expr[Any]*): c.Expr[Any] = {
     import c.universe._
+
+    val ctx: String = c.prefix.tree match {
+      case q"new Profile($ctx)" => c.eval[String](c.Expr(ctx))
+    }
 
     val result = {
       annottees.map(_.tree).toList match {
@@ -20,7 +24,8 @@ object Profile {
             val start = System.nanoTime()
             val profSpliceResultValueNoConflict = {..$body}
             val end = System.nanoTime()
-            println("PROFILING_DATUM: (\"${methodName.toString}\", " + (end-start) + ")")
+            println(ctx)
+            println("PROFILING_DATUM: (\""+${methodName.toString}+"\", " + (end-start) + ")")
             profSpliceResultValueNoConflict
           }"""
         }
@@ -34,7 +39,7 @@ object Profile {
     val start = System.nanoTime()
     val r: T = f()
     val end = System.nanoTime()
-    println("PROFILING_DATUM: (\"${methodName.toString}\", " + (end-start) + ")")
+    println("PROFILING_DATUM: (\"" + name + "\", " + (end-start) + ")")
     r
   }
 }
