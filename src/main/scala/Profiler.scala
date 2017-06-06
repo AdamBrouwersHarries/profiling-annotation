@@ -14,7 +14,7 @@ object Profile {
     import c.universe._
 
     val ctx: String = c.prefix.tree match {
-      case q"new Profile($ctx)" => c.eval[String](c.Expr(ctx))
+      case q"new Profile($extraContext)" => c.eval[String](c.Expr(extraContext))
     }
 
     val result = {
