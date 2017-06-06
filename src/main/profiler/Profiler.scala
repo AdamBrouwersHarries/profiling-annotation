@@ -31,7 +31,7 @@ object Profile {
     val start = System.nanoTime()
     val r: T = f()
     val end = System.nanoTime()
-    println(${methodName.toString} + " elapsed time: " + (end - start) + "ns")
+    println("${name} - elapsed time: " + (end - start) + "ns")
     r
   }
 }
