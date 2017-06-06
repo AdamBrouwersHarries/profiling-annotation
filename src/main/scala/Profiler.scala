@@ -18,10 +18,10 @@ object Profile {
         case q"$mods def $methodName[..$tpes](...$args): $returnType = { ..$body }" :: Nil => {
           q"""$mods def $methodName[..$tpes](...$args): $returnType =  {
             val start = System.nanoTime()
-            val result = {..$body}
+            val profSpliceResultValueNoConflict = {..$body}
             val end = System.nanoTime()
             println(${methodName.toString} + " elapsed time: " + (end - start) + "ns")
-            result
+            profSpliceResultValueNoConflict
           }"""
         }
         case _ => c.abort(c.enclosingPosition, "Annotation @Profile can be used only with methods")
