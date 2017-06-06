@@ -18,7 +18,7 @@ version := "0.0.1"
 //   )
 
 libraryDependencies ++= Seq(
-  "org.scala-lang" % "scala-compiler" % "2.11.8"
+  "org.scala-lang" % "scala-compiler" % "2.11.7"
 )
 
 val paradiseVersion = "2.1.0-M5"
