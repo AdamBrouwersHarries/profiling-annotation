@@ -24,7 +24,7 @@ object Profile {
             val start = System.nanoTime()
             val profSpliceResultValueNoConflict = {..$body}
             val end = System.nanoTime()
-            println("PROFILING_DATUM: (\""+${methodName.toString}+"\", \"" + ${ctx.toString} + "\", " + (end-start)/1000000 + ")")
+            println("PROFILING_DATUM: (\""+${methodName.toString}+"\", \"" + ${ctx.toString} + "\", " + (end-start).toDouble/1000000 + ")")
             profSpliceResultValueNoConflict
           }"""
         }
@@ -38,7 +38,7 @@ object Profile {
     val start = System.nanoTime()
     val r: T = f()
     val end = System.nanoTime()
-    println("PROFILING_DATUM: (\"" + name + "\", \"" + context + "\"," + (end-start)/1000000 + ")")
+    println("PROFILING_DATUM: (\"" + name + "\", \"" + context + "\"," + (end-start).toDouble/1000000 + ")")
     r
   }
 }
